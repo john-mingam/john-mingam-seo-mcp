@@ -63,6 +63,33 @@ Important: external APIs are opt-in and user-managed. You must provide your own 
 
 Dry-run mode: set SEO_MCP_DRY_RUN=true to simulate all write tools without changing remote platforms.
 
+## Auth Compatibility Matrix
+
+| Tool | Platform/API | Supported auth modes | Where to provide credentials |
+|---|---|---|---|
+| wp_page_seo_update | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input `credentials` |
+| wp_bulk_seo_update | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input `credentials` |
+| wp_schema_inject | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input `credentials` |
+| wp_redirect_manager | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input `credentials` |
+| shopify_seo_audit | Shopify Admin API | adminApiKey, oauthToken, storefrontToken (read-only fallback) | tool input `credentials` |
+| shopify_product_seo_update | Shopify Admin API | adminApiKey, oauthToken | tool input `credentials` |
+| shopify_collection_seo_update | Shopify Admin API | adminApiKey, oauthToken | tool input `credentials` |
+| shopify_metafields_schema | Shopify Admin API | adminApiKey, oauthToken | tool input `credentials` |
+| shopify_canonical_fix | Shopify Admin API | adminApiKey, oauthToken | tool input `credentials` |
+| cms_api_seo_read | Custom CMS | bearer, apikey, basic, oauth2 | tool input `auth` |
+| cms_api_seo_write | Custom CMS | bearer, apikey, basic, oauth2 | tool input `auth` |
+| technical_core_web_vitals | Google PageSpeed Insights | API key | env `PAGESPEED_API_KEY` |
+| report_seo_dashboard | Google Search Console | OAuth access token | env `GSC_ACCESS_TOKEN`, optional `GSC_SITE_URL` |
+| report_gsc_insights | Google Search Console | OAuth access token | env `GSC_ACCESS_TOKEN`, optional `GSC_SITE_URL` |
+| onpage_keyword_research | SEMrush API | API key | env `SEMRUSH_API_KEY` |
+| links_backlink_audit | Ahrefs API | API key/bearer token | env `AHREFS_API_KEY` |
+| links_opportunity_finder | Ahrefs API | API key/bearer token | env `AHREFS_API_KEY` |
+
+Notes:
+- Write tools can be simulated globally via `SEO_MCP_DRY_RUN=true`.
+- Write tools can be disabled globally via `SEO_MCP_READ_ONLY=true`.
+- If credentials are missing, tools return a structured error or fallback read-only synthesis depending on the tool.
+
 ## Deployment targets
 
 - Docker
