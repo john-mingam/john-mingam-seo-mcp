@@ -1,45 +1,52 @@
 # seo-mcp
 
-Production-grade MCP server for SEO operations across WordPress, Shopify, and custom CMS platforms.
+Production-grade MCP server that gives AI agents real SEO execution power across WordPress, Shopify, and custom CMS platforms.
+
+[![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6)](https://www.typescriptlang.org/)
+[![MCP](https://img.shields.io/badge/MCP-Compatible-0A66C2)](https://modelcontextprotocol.io)
+[![License](https://img.shields.io/badge/License-MIT-F2C94C)](LICENSE)
+
+## Why seo-mcp
+
+- 65 SEO tools grouped by domain: Entity, Technical, On-page, Links, Platform, Reporting
+- Real platform operations via API adapters (WordPress and Shopify)
+- Structured JSON outputs plus human-readable summaries
+- Zod validation and standardized error contracts
+- Optional read-only and global dry-run safety modes
 
 ## Identity
 
 - Name: john-mingam-seo-mcp
 - Version: 1.0.0
 - Author: John Mingam
-- License: MIT
 - Runtime: Node.js 20+
 - Transport: stdio and Streamable HTTP
 
-## Features
+## Quick Start
 
-- 65 tools across Entity SEO, Technical SEO, On-page SEO, Links, Platform operations, and Reporting
-- Unified adapter architecture for wordpress, shopify, custom CMS
-- Zod input validation for all tools
-- Structured output plus human-readable summaries
-- Standardized error format
-- Optional read-only mode via environment variable
-
-## Install
+### 1) Install and build
 
 ```bash
 npm install
 npm run build
 ```
 
-## Run local (stdio)
+### 2) Run local (stdio)
 
 ```bash
 npm run start:stdio
 ```
 
-## Run remote (http)
+### 3) Run remote (http)
 
 ```bash
 npm run start:http
 ```
 
-## Claude Desktop config
+## Claude Integration
+
+### Local Claude Desktop (stdio)
 
 ```json
 {
@@ -55,9 +62,9 @@ npm run start:http
 }
 ```
 
-## Claude MCP config (remote URL)
+### Remote Claude MCP (url)
 
-Use this when your MCP server is deployed remotely (Railway, Render, VPS, etc.):
+Use this when your server is deployed on Railway, Render, VPS, or another public endpoint.
 
 ```json
 {
@@ -70,49 +77,43 @@ Use this when your MCP server is deployed remotely (Railway, Render, VPS, etc.):
 }
 ```
 
-## Environment variables
+## Environment and Safety
 
-See .env.example for full list.
-
-Important: external APIs are opt-in and user-managed. You must provide your own credentials for services such as WordPress, Shopify, Google PageSpeed, and Google Search Console (and optionally Ahrefs/SEMrush).
-
-Dry-run mode: set SEO_MCP_DRY_RUN=true to simulate all write tools without changing remote platforms.
+- Full variable list: see .env.example
+- External APIs are user-managed (bring your own keys)
+- Dry-run mode: SEO_MCP_DRY_RUN=true
+- Read-only mode: SEO_MCP_READ_ONLY=true
 
 ## Auth Compatibility Matrix
 
-| Tool | Platform/API | Supported auth modes | Where to provide credentials |
+| Tool | Platform/API | Supported auth modes | Credentials location |
 |---|---|---|---|
-| wp_page_seo_update | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input `credentials` |
-| wp_bulk_seo_update | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input `credentials` |
-| wp_schema_inject | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input `credentials` |
-| wp_redirect_manager | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input `credentials` |
-| shopify_seo_audit | Shopify Admin API | adminApiKey, oauthToken, storefrontToken (read-only fallback) | tool input `credentials` |
-| shopify_product_seo_update | Shopify Admin API | adminApiKey, oauthToken | tool input `credentials` |
-| shopify_collection_seo_update | Shopify Admin API | adminApiKey, oauthToken | tool input `credentials` |
-| shopify_metafields_schema | Shopify Admin API | adminApiKey, oauthToken | tool input `credentials` |
-| shopify_canonical_fix | Shopify Admin API | adminApiKey, oauthToken | tool input `credentials` |
-| cms_api_seo_read | Custom CMS | bearer, apikey, basic, oauth2 | tool input `auth` |
-| cms_api_seo_write | Custom CMS | bearer, apikey, basic, oauth2 | tool input `auth` |
-| technical_core_web_vitals | Google PageSpeed Insights | API key | env `PAGESPEED_API_KEY` |
-| report_seo_dashboard | Google Search Console | OAuth access token | env `GSC_ACCESS_TOKEN`, optional `GSC_SITE_URL` |
-| report_gsc_insights | Google Search Console | OAuth access token | env `GSC_ACCESS_TOKEN`, optional `GSC_SITE_URL` |
-| onpage_keyword_research | SEMrush API | API key | env `SEMRUSH_API_KEY` |
-| links_backlink_audit | Ahrefs API | API key/bearer token | env `AHREFS_API_KEY` |
-| links_opportunity_finder | Ahrefs API | API key/bearer token | env `AHREFS_API_KEY` |
+| wp_page_seo_update | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input credentials |
+| wp_bulk_seo_update | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input credentials |
+| wp_schema_inject | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input credentials |
+| wp_redirect_manager | WordPress REST | username+appPassword, jwtToken, oauthToken | tool input credentials |
+| shopify_seo_audit | Shopify Admin API | adminApiKey, oauthToken, storefrontToken (read fallback) | tool input credentials |
+| shopify_product_seo_update | Shopify Admin API | adminApiKey, oauthToken | tool input credentials |
+| shopify_collection_seo_update | Shopify Admin API | adminApiKey, oauthToken | tool input credentials |
+| shopify_metafields_schema | Shopify Admin API | adminApiKey, oauthToken | tool input credentials |
+| shopify_canonical_fix | Shopify Admin API | adminApiKey, oauthToken | tool input credentials |
+| cms_api_seo_read | Custom CMS | bearer, apikey, basic, oauth2 | tool input auth |
+| cms_api_seo_write | Custom CMS | bearer, apikey, basic, oauth2 | tool input auth |
+| technical_core_web_vitals | Google PageSpeed Insights | API key | env PAGESPEED_API_KEY |
+| report_seo_dashboard | Google Search Console | OAuth access token | env GSC_ACCESS_TOKEN, optional GSC_SITE_URL |
+| report_gsc_insights | Google Search Console | OAuth access token | env GSC_ACCESS_TOKEN, optional GSC_SITE_URL |
+| onpage_keyword_research | SEMrush API | API key | env SEMRUSH_API_KEY |
+| links_backlink_audit | Ahrefs API | API key or bearer token | env AHREFS_API_KEY |
+| links_opportunity_finder | Ahrefs API | API key or bearer token | env AHREFS_API_KEY |
 
-Notes:
-- Write tools can be simulated globally via `SEO_MCP_DRY_RUN=true`.
-- Write tools can be disabled globally via `SEO_MCP_READ_ONLY=true`.
-- If credentials are missing, tools return a structured error or fallback read-only synthesis depending on the tool.
-
-## Deployment targets
+## Deployment Targets
 
 - Docker
 - Railway
 - Render
 - Vercel
 
-## Project structure
+## Architecture Snapshot
 
 ```text
 src/
@@ -128,3 +129,8 @@ src/
   validators/
   types/
 ```
+
+## Notes
+
+- If credentials are missing, tools return structured errors or controlled fallback outputs.
+- Write operations are protected by read-only and dry-run global switches.
