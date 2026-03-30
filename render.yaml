@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: seo-mcp
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: node dist/index.js --transport http --port $PORT
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: SEO_MCP_LOG_LEVEL
+        value: info
