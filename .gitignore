@@ -6,4 +6,5 @@ coverage
 .vscode
 *.log
 */files
+/files/
 
