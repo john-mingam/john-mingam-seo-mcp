@@ -55,6 +55,21 @@ npm run start:http
 }
 ```
 
+## Claude MCP config (remote URL)
+
+Use this when your MCP server is deployed remotely (Railway, Render, VPS, etc.):
+
+```json
+{
+  "mcpServers": {
+    "seo-mcp": {
+      "url": "https://your-seo-mcp.example.com",
+      "apiKey": "your-mcp-api-key"
+    }
+  }
+}
+```
+
 ## Environment variables
 
 See .env.example for full list.
